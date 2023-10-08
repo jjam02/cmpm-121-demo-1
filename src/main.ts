@@ -4,7 +4,7 @@ const app: HTMLDivElement = document.querySelector("#app")!;
 
 const gameName = "Jonathan Alvarez game";
 let counter: number = 0;
-let rate: number = 1;
+const rate: number = 1;
 
 document.title = gameName;
 
