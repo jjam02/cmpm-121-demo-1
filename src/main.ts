@@ -11,5 +11,5 @@ header.innerHTML = gameName;
 app.append(header);
 
 const clicker = document.createElement("button");
-clicker.innerHTML = "CLICK ON ME PLS 💯🔥🔥👌👌";
+clicker.innerHTML = "CLICK ON ME PLS ⚡⚡⚡";
 app.append(clicker);
