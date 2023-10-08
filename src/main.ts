@@ -4,6 +4,7 @@ const app: HTMLDivElement = document.querySelector("#app")!;
 
 const gameName = "Jonathan Alvarez game";
 let counter: number = 0;
+let rate: number = 1;
 
 document.title = gameName;
 
@@ -22,3 +23,11 @@ app.append(clicker);
 const count = document.createElement("div");
 count.innerHTML = `This much power ${counter} ⚡`;
 app.append(count);
+
+setInterval(counterHelper, 1000);
+
+function counterHelper() {
+  counter += rate;
+  counter = parseFloat(counter.toFixed(1));
+  count.innerHTML = `This much power ${counter} ⚡`;
+}
