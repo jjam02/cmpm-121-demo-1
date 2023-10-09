@@ -34,18 +34,15 @@ app.append(count);
 // }
 let frameCount = 0;
 let lastFrameTime = 0;
+let frameRate = 60; //min frame rate
 
 function measureFrameRate() {
   const currentTime = performance.now();
-  //console.log(currentTime,"this is the time");
   frameCount++;
-
+  counter += rate / frameRate;
+  count.innerHTML = `This much power ${counter.toFixed(2)} ⚡`;
   if (currentTime - lastFrameTime >= 1000) {
-    // Calculate frame rate every second
-    const frameRate = frameCount;
-    console.log(`Frame Rate: ${frameRate} FPS`);
-    counter += rate / frameRate;
-    count.innerHTML = `This much power ${counter.toFixed(2)} ⚡`;
+    frameRate = frameCount;
     frameCount = 0;
     lastFrameTime = currentTime;
   }
