@@ -52,11 +52,11 @@ app.append(count);
 setInterval(upgradeChecker, 500);
 
 function upgradeChecker() {
-    if (counter >= upgrade1Cost) {
-        upgrade1.disabled = false;
-    }else{
-        upgrade1.disabled = true;
-    }
+  if (counter >= upgrade1Cost) {
+    upgrade1.disabled = false;
+  } else {
+    upgrade1.disabled = true;
+  }
 }
 let frameCount = 0;
 let lastFrameTime = performance.now();
