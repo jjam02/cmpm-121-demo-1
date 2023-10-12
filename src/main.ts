@@ -70,7 +70,7 @@ upgrade2.addEventListener("click", () => {
   upgrade2Data.cells[1].textContent = `${upgrade2Owned}`;
   rate += 2;
   counter -= upgrade2Cost;
-  upgrade2Cost *= 1.3;
+  upgrade2Cost *= 1.15;
   upgrade2.innerHTML = `coal miner (${upgrade2Cost.toFixed(2)} ⚡) +2 ⚡/sec `;
   if (counter < upgrade2Cost) {
     upgrade2.disabled = true;
@@ -91,7 +91,7 @@ upgrade3.addEventListener("click", () => {
   upgrade3Data.cells[1].textContent = `${upgrade3Owned}`;
   rate += 50;
   counter -= upgrade3Cost;
-  upgrade3Cost *= 1.57;
+  upgrade3Cost *= 1.15;
   upgrade3.innerHTML = `wind turbine (${upgrade3Cost.toFixed(
     2,
   )} ⚡) +50 ⚡/sec `;
