@@ -81,3 +81,19 @@ th {
   text-align: left;
   padding: 8px;
 }
+
+@keyframes flash {
+  0% {
+    background-color: yellow; /* Initial background color */
+  }
+  50% {
+    background-color: orange; /* Midway color during the flash */
+  }
+  100% {
+    background-color: yellow; /* Return to the initial color */
+  }
+}
+
+.flashing {
+  animation: flash 0.5s infinite; /* Adjust the duration as needed */
+}

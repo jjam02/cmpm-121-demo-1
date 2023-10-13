@@ -5,6 +5,7 @@ const app: HTMLDivElement = document.querySelector("#app")!;
 const gameName = "Jonathan Alvarez game";
 let counter: number = 0;
 let rate: number = 0;
+const table = document.getElementById("upgrade table")!;
 
 interface Item {
   name: string;
@@ -12,6 +13,7 @@ interface Item {
   rate: number;
   own: number;
   button: HTMLButtonElement;
+  emojiTable: string;
   emoji: string;
 }
 
@@ -22,6 +24,7 @@ const availableItems: Item[] = [
     rate: 0.1,
     own: 0,
     button: document.createElement("button"),
+    emojiTable: "|🐹🎡",
     emoji: "🐹🎡",
   },
   {
@@ -30,6 +33,7 @@ const availableItems: Item[] = [
     rate: 1,
     own: 0,
     button: document.createElement("button"),
+    emojiTable: "|🕺⛏",
     emoji: "🕺⛏",
   },
   {
@@ -38,6 +42,7 @@ const availableItems: Item[] = [
     rate: 50,
     own: 0,
     button: document.createElement("button"),
+    emojiTable: "|🌬️🌾🏭",
     emoji: "🌬️🌾🏭",
   },
 ];
@@ -58,11 +63,27 @@ function setUpgradeText(upgrade: Item): void {
   } </br> (${upgrade.cost.toFixed(2)} ⚡)| +${upgrade.rate} ⚡/sec`;
 }
 
-function setUpgradeTable(upgrade: Item): void {
+function setUpgradeTable(upgrade: Item) {
+  const newRow = document.createElement("tr");
+  newRow.id = `${upgrade.name} row`;
+  const name = document.createElement("td");
+  name.textContent = `${upgrade.name} ` + `${upgrade.emoji}`;
+
+  const amount = document.createElement("td");
+  amount.textContent = "0";
+
+  newRow.appendChild(name);
+  newRow.appendChild(amount);
+  table?.appendChild(newRow);
+}
+
+function updateUpgradeTable(upgrade: Item): void {
   const row = document.getElementById(
     `${upgrade.name} row`,
   ) as HTMLTableRowElement;
-  row.cells[1].textContent += `|${upgrade.emoji}`;
+
+  row.cells[1].textContent = `${upgrade.own}` + `${upgrade.emojiTable}`;
+  upgrade.emojiTable += "|" + upgrade.emoji;
 }
 
 function updateUpgrade(upgrade: Item): void {
@@ -70,13 +91,14 @@ function updateUpgrade(upgrade: Item): void {
   upgrade.cost *= 1.15;
   upgrade.own += 1;
   setUpgradeText(upgrade);
-  setUpgradeTable(upgrade);
+  updateUpgradeTable(upgrade);
 }
 
 function upgradeSetup(upgrades: Item[]) {
   upgrades.forEach((item) => {
     setUpgradeText(item);
     item.button.disabled = true;
+    setUpgradeTable(item);
     item.button.addEventListener("click", () => {
       updateUpgrade(item);
       updateGlobalRate(item);
@@ -91,17 +113,26 @@ const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);
 
-const rateInfo = document.createElement("h2");
-rateInfo.innerHTML = `autoclick ⚡${rate}/sec`;
-app.append(rateInfo);
-
 const clicker = document.createElement("button");
-clicker.innerHTML = "Generate Electricity ⚡⚡⚡";
+clicker.style.fontSize = "50px";
+clicker.innerHTML = "GENERATE POWER <br>⚡";
+
 clicker.addEventListener("click", () => {
+  clicker.classList.add("flashing");
+
+  // Simulate a delay for the flashing effect
+  setTimeout(() => {
+    // Remove the flashing effect class after a certain time (e.g., 1 second)
+    clicker.classList.remove("flashing");
+  }, 1000); // Adjust the time as needed
   counter += 1;
   count.innerHTML = `This much power ${counter.toFixed(0)} ⚡`;
 });
 app.append(clicker);
+
+const rateInfo = document.createElement("h2");
+rateInfo.innerHTML = `autoclick ⚡${rate}/sec`;
+app.append(rateInfo);
 
 upgradeSetup(availableItems);
 
@@ -110,15 +141,10 @@ count.innerHTML = `This much power ${counter.toFixed(0)} ⚡`;
 count.style.fontSize = "50px";
 app.append(count);
 
-setInterval(upgradeChecker, 500);
-
 function upgradeChecker(upgrade: Item) {
-  if (counter >= upgrade.cost) {
-    upgrade.button.disabled = false;
-  } else {
-    upgrade.button.disabled = true;
-  }
+  upgrade.button.disabled = upgrade.cost > counter;
 }
+
 let frameCount = 0;
 let lastFrameTime = performance.now();
 let frameRate = 60; //min frame rate
