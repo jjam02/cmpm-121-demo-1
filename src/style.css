@@ -97,3 +97,8 @@ th {
 .flashing {
   animation: flash 0.5s infinite; /* Adjust the duration as needed */
 }
+
+.highlight {
+  background: rgba(255, 240, 0, 0.2);
+  border-color: rgba(255, 240, 0, 1);
+}

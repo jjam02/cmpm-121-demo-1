@@ -120,11 +120,9 @@ clicker.innerHTML = "GENERATE POWER <br>⚡";
 clicker.addEventListener("click", () => {
   clicker.classList.add("flashing");
 
-  // Simulate a delay for the flashing effect
   setTimeout(() => {
-    // Remove the flashing effect class after a certain time (e.g., 1 second)
     clicker.classList.remove("flashing");
-  }, 1000); // Adjust the time as needed
+  }, 500);
   counter += 1;
   count.innerHTML = `This much power ${counter.toFixed(0)} ⚡`;
 });
@@ -143,11 +141,14 @@ app.append(count);
 
 function upgradeChecker(upgrade: Item) {
   upgrade.button.disabled = upgrade.cost > counter;
+  if (!upgrade.button.disabled) {
+    upgrade.button.classList.add("highlight");
+  } else upgrade.button.classList.remove("highlight");
 }
 
 let frameCount = 0;
 let lastFrameTime = performance.now();
-let frameRate = 60; //min frame rate
+let frameRate = 1; //min frame rate
 
 function measureFrameRate() {
   availableItems.forEach((item) => upgradeChecker(item));
