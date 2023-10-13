@@ -2,7 +2,7 @@ import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
-const gameName = "Jonathan Alvarez game";
+const gameName = "Amp it up!";
 let counter: number = 0;
 let rate: number = 0;
 const table = document.getElementById("upgrade table")!;
@@ -15,6 +15,7 @@ interface Item {
   button: HTMLButtonElement;
   emojiTable: string;
   emoji: string;
+  desc: string;
 }
 
 const availableItems: Item[] = [
@@ -26,6 +27,7 @@ const availableItems: Item[] = [
     button: document.createElement("button"),
     emojiTable: "|🐹🎡",
     emoji: "🐹🎡",
+    desc: "harvest the labor of rodents",
   },
   {
     name: "coal miner",
@@ -35,6 +37,7 @@ const availableItems: Item[] = [
     button: document.createElement("button"),
     emojiTable: "|🕺⛏",
     emoji: "🕺⛏",
+    desc: "they yearn for the mines",
   },
   {
     name: "wind turbine",
@@ -44,6 +47,27 @@ const availableItems: Item[] = [
     button: document.createElement("button"),
     emojiTable: "|🌬️🌾🏭",
     emoji: "🌬️🌾🏭",
+    desc: " catch the breeze with clean energy",
+  },
+  {
+    name: "Solar Panels",
+    cost: 1250,
+    rate: 75,
+    own: 0,
+    button: document.createElement("button"),
+    emojiTable: "|🌞🔌",
+    emoji: "🌞🔌",
+    desc: " the power of the sun in the palm of my roof",
+  },
+  {
+    name: "Nuclear Reactor",
+    cost: 2000,
+    rate: 150,
+    own: 0,
+    button: document.createElement("button"),
+    emojiTable: "|",
+    emoji: "⚛️🏭🔋",
+    desc: "nothing dangerous happening here",
   },
 ];
 
@@ -58,9 +82,11 @@ function updateCounter(upgrade: Item) {
 }
 
 function setUpgradeText(upgrade: Item): void {
-  upgrade.button.innerHTML = `${upgrade.name} ${
+  upgrade.button.innerHTML = `<p style = "font-size: 20px;" >${upgrade.name} ${
     upgrade.emoji
-  } </br> (${upgrade.cost.toFixed(2)} ⚡)| +${upgrade.rate} ⚡/sec`;
+  } </br> (${upgrade.cost.toFixed(2)} ⚡)| +${
+    upgrade.rate
+  } ⚡/sec </p> <br> <i>${upgrade.desc} </i>`;
 }
 
 function setUpgradeTable(upgrade: Item) {
@@ -114,7 +140,7 @@ header.innerHTML = gameName;
 app.append(header);
 
 const clicker = document.createElement("button");
-clicker.style.fontSize = "50px";
+clicker.style.fontSize = "30px";
 clicker.innerHTML = "GENERATE POWER <br>⚡";
 
 clicker.addEventListener("click", () => {
@@ -131,13 +157,12 @@ app.append(clicker);
 const rateInfo = document.createElement("h2");
 rateInfo.innerHTML = `autoclick ⚡${rate}/sec`;
 app.append(rateInfo);
-
-upgradeSetup(availableItems);
-
 const count = document.createElement("div");
 count.innerHTML = `This much power ${counter.toFixed(0)} ⚡`;
-count.style.fontSize = "50px";
+//count.style.fontSize = "50px";
 app.append(count);
+
+upgradeSetup(availableItems);
 
 function upgradeChecker(upgrade: Item) {
   upgrade.button.disabled = upgrade.cost > counter;
